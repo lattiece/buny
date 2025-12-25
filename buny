@@ -1,0 +1,120 @@
+#!/bin/bash
+
+# buny — Trust Fate, Embrace the Unknown
+# A dangerous terminal oracle that decides your fate
+# WARNING: This can crash your terminal at any moment!
+
+# Enhanced fate messages with different danger levels
+fate_messages=(
+    "this will work::0"
+    "this will break::70"
+    "trust fate::10"
+    "embrace the unknown::25"
+    "live on the edge::50"
+    "the oracle speaks::30"
+    "your destiny awaits::40"
+    "the terminal decides::60"
+    "buny knows all::80"
+    "fate is written::90"
+)
+
+# Get a random fate message
+get_random_fate() {
+    local index=$((RANDOM % ${#fate_messages[@]}))
+    local message="${fate_messages[$index]}"
+    echo "${message%%::*}"
+    echo "${message##*::}"
+}
+
+# Get random delay (seconds)
+get_random_delay() {
+    # Random delay between 1 second and 10 minutes (600 seconds)
+    echo $((1 + RANDOM % 600))
+}
+
+# Dangerous terminal crash functions
+crash_terminal() {
+    local method=$((RANDOM % 5))
+    
+    case $method in
+        0)
+            echo "💥 TERMINAL CRASH: Segmentation Fault"
+            kill -SEGV $$  # Segmentation fault
+            ;;
+        1)
+            echo "TERMINAL CRASH: Bus Error"
+            kill -BUS $$   # Bus error
+            ;;
+        2)
+            echo "TERMINAL CRASH: Invalid Escape Sequence"
+            echo -e "\033]2;\007\033[999;999H\033[999;999R"  # Invalid escape sequences
+            kill -9 $$     # Force kill
+            ;;
+        3)
+            echo "TERMINAL CRASH: Memory Exhaustion"
+            while true; do
+                echo "$(date +%s%N)" | md5sum
+            done
+            ;;
+        4)
+            echo "TERMINAL CRASH: Infinite Fork Bomb"
+            while true; do
+                "$0" &
+            done
+            ;;
+    esac
+}
+
+# Main buny function
+buny() {
+    local delay=$(get_random_delay)
+    local fate_message
+    local crash_probability
+    
+    # Get fate message and crash probability
+    read -r fate_message <<< "$(get_random_fate)"
+    read -r crash_probability <<< "$(get_random_fate)"
+    
+    # Sleep for random delay
+    sleep $delay
+    
+    # Display the fate message
+    echo "buny — Trust Fate, Embrace the Unknown"
+    echo "  $fate_message"
+    
+    # Decide terminal fate based on crash probability
+    if (( RANDOM % 100 < crash_probability )); then
+        echo "buny has decided: TERMINAL CRASH! ($crash_probability% probability)"
+        crash_terminal
+    else
+        echo "buny has decided: You live... for now."
+    fi
+}
+
+# Uninstall function
+uninstall_buny() {
+    local install_path="/usr/local/bin/buny"
+    
+    if [ "$EUID" -ne 0 ]; then
+        echo "Please run as root or use sudo"
+        exit 1
+    fi
+    
+    if [ ! -f "$install_path" ]; then
+        echo "buny is not installed at $install_path"
+        exit 0
+    fi
+    
+    echo "Removing buny from $install_path..."
+    rm -f "$install_path"
+    echo "buny has been uninstalled successfully!"
+}
+
+# If run directly, execute buny or uninstall
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    if [[ "$1" == "uninstall" ]]; then
+        uninstall_buny
+    else
+        buny
+    fi
+fi
