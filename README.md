@@ -2,7 +2,7 @@
 
 trust fate, embrace the unknown.
 
-a dangerous terminal oracle that decides your fate.
+terminal destroyer that decides your fate.
 
 ## install
 
@@ -26,6 +26,6 @@ sudo buny uninstall
 
 ## warning
 
-⚠️  buny can crash your terminal at any moment!
-⚠️  automatic execution makes this even more dangerous!
-⚠️  use at your own risk!
+ buny can crash your terminal at any moment!
+ automatic execution makes this even more dangerous!
+ use at your own risk!
