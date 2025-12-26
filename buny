@@ -23,13 +23,19 @@ get_random_fate() {
     local index=$((RANDOM % ${#fate_messages[@]}))
     local message="${fate_messages[$index]}"
     echo "${message%%::*}"
+}
+
+# Get crash probability for a fate message
+get_crash_probability() {
+    local index=$((RANDOM % ${#fate_messages[@]}))
+    local message="${fate_messages[$index]}"
     echo "${message##*::}"
 }
 
 # Get random delay (seconds)
 get_random_delay() {
-    # Random delay between 1 second and 10 minutes (600 seconds)
-    echo $((1 + RANDOM % 600))
+    # Random delay between 1 second and 30 seconds
+    echo $((1 + RANDOM % 30))
 }
 
 # Dangerous terminal crash functions
@@ -72,8 +78,8 @@ buny() {
     local crash_probability
     
     # Get fate message and crash probability
-    read -r fate_message <<< "$(get_random_fate)"
-    read -r crash_probability <<< "$(get_random_fate)"
+    fate_message=$(get_random_fate)
+    crash_probability=$(get_crash_probability)
     
     # Sleep for random delay
     sleep $delay
@@ -83,7 +89,7 @@ buny() {
     echo "  $fate_message"
     
     # Decide terminal fate based on crash probability
-    if (( RANDOM % 100 < crash_probability )); then
+    if (( RANDOM % 100 < ${crash_probability:-0} )); then
         echo "buny has decided: TERMINAL CRASH! ($crash_probability% probability)"
         crash_terminal
     else
