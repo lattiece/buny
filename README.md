@@ -1,10 +1,10 @@
 # buny
 
-trust fate, embrace the unknown.
+trust *fate*, embrace *unknown*.
 
 terminal destroyer that decides your fate.
 
-## install
+### install
 
 ```bash
 curl -s https://raw.githubusercontent.com/lattiece/buny/main/install.sh | sudo bash
@@ -12,13 +12,13 @@ curl -s https://raw.githubusercontent.com/lattiece/buny/main/install.sh | sudo b
 
 during install, you can choose to enable automatic execution - buny will run automatically every time you open a terminal.
 
-## usage
+### usage
 
 ```bash
 buny
 ```
 
-## uninstall
+### uninstall
 
 ```bash
 sudo buny uninstall
