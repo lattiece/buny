@@ -1,5 +1,7 @@
 # buny
 
+little broken cuz idk why for now
+
 trust *fate*, embrace *unknown*.
 
 terminal destroyer that decides your fate.
